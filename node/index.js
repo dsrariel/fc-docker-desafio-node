@@ -21,11 +21,28 @@ const sql = `INSERT INTO people(name) values('Wesley')`
 connection.query(sql)
 connection.end()
 
+app.get('/', (_, res) => {
+    const connection = mysql.createConnection(config)
+    connection.query(`SELECT * FROM people;`, (err, result, _) => {
+        let htmlResponse = '<h1>Full Cycle</h1>';
 
-app.get('/', (req,res) => {
-    res.send('<h1>Full Cycle</h1>')
+        if (err) throw err;
+
+        if (result.length === 0) {
+            return
+        }
+
+        htmlResponse += '<ul>';
+        for (let i = 0; i < result.length; i++) {
+            htmlResponse += `<li>${result[i].name}</li>`;
+        }
+        htmlResponse += '</ul>';
+
+        res.send(htmlResponse);
+    })
+    connection.end();
 })
 
-app.listen(port, ()=> {
+app.listen(port, () => {
     console.log('Rodando na porta ' + port)
 })
