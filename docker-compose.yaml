@@ -2,6 +2,18 @@ version: '3'
 
 services:
 
+  nginx:
+    build:
+      context: ./nginx
+    container_name: nginx
+    command: dockerize -wait http://app:3000 -timeout 20s nginx -g 'daemon off;'
+    networks:
+      - node-network
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+
   app:
     build:
       context: node
