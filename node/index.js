@@ -5,11 +5,18 @@ const config = {
     host: 'db',
     user: 'root',
     password: 'root',
-    database:'nodedb'
+    database: 'nodedb'
 };
 const mysql = require('mysql')
 const connection = mysql.createConnection(config)
 
+connection.query(`
+    CREATE TABLE IF NOT EXISTS people(
+        id INT AUTO_INCREMENT NOT NULL,
+        name VARCHAR(255),
+        PRIMARY KEY(id)
+    );
+`)
 const sql = `INSERT INTO people(name) values('Wesley')`
 connection.query(sql)
 connection.end()
