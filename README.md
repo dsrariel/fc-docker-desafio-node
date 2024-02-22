@@ -8,7 +8,9 @@ This repo creates 3 containers:
 3. db: a mysql db.
 
 db will mount a volume locally to persist db data under `./mysql`.
-app root page will show a list of names registered on db.
+app:
+    - will mount a volume locally to reflect the changes mande under `./node`.
+    - its root page will show a list of names registered on db.
 
 # How to run
 ```bash
